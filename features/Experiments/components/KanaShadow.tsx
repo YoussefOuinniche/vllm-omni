@@ -106,8 +106,8 @@ const KanaShadow = () => {
               feedback === 'correct' ? 'text-green-400' : 'text-red-400',
             )}
           >
-            {feedback === 'correct' ? '✓ Correct!' : '✗ Wrong!'} It's "
-            {currentRound.shadow.romanji}"
+            {feedback === 'correct' ? '✓ Correct!' : '✗ Wrong!'} It&apos;s &quot;
+            {currentRound.shadow.romanji}&quot;
           </p>
           <button
             onClick={nextRound}

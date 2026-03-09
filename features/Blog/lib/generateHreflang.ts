@@ -49,17 +49,17 @@ export function generateHreflang(
 ): HreflangTag[] {
   const baseUrl = options.baseUrl ?? BASE_URL;
 
-  // Locale prefixes are disabled; all locales resolve to the same public URL.
+  // Generate hreflang tags with locale-specific URLs
   const tags: HreflangTag[] = availableLocales.map(locale => ({
     hreflang: LOCALE_TO_HREFLANG[locale],
-    href: `${baseUrl}/academy/${slug}`,
+    href: `${baseUrl}/${locale}/academy/${slug}`,
   }));
 
-  // Add x-default pointing to the canonical public URL.
-  if (availableLocales.length > 0) {
+  // Add x-default pointing to the English version if available.
+  if (availableLocales.includes('en')) {
     tags.push({
       hreflang: 'x-default',
-      href: `${baseUrl}/academy/${slug}`,
+      href: `${baseUrl}/en/academy/${slug}`,
     });
   }
 

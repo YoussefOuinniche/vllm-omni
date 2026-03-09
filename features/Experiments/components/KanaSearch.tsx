@@ -1,10 +1,15 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useClick, useCorrect, useError } from '@/shared/hooks/useAudio';
 import { allKana } from '../data/kanaData';
 import clsx from 'clsx';
-import { Search, Timer, Trophy, AlertCircle } from 'lucide-react';
+import { Search, Timer, AlertCircle } from 'lucide-react';
+
+type KanaItem = {
+  kana: string;
+  romanji: string;
+};
 
 const GRID_SIZE = 36; // 6x6
 const ROUND_TIME = 10;
@@ -12,7 +17,7 @@ const ROUND_TIME = 10;
 export default function KanaSearch() {
   const [level, setLevel] = useState(1);
   const [target, setTarget] = useState(allKana[0]);
-  const [grid, setGrid] = useState<any[]>([]);
+  const [grid, setGrid] = useState<KanaItem[]>([]);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME);
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState<'playing' | 'gameover' | 'idle'>(
@@ -66,7 +71,7 @@ export default function KanaSearch() {
     return () => clearInterval(timer);
   }, [gameState, timeLeft, playError]);
 
-  const handleSelect = (kana: any) => {
+  const handleSelect = (kana: KanaItem) => {
     if (gameState !== 'playing') return;
 
     if (kana.kana === target.kana) {
@@ -123,7 +128,7 @@ export default function KanaSearch() {
           </div>
           <div>
             <h2 className='text-3xl font-black text-(--main-color)'>
-              TIME'S UP!
+              TIME&apos;S UP!
             </h2>
             <p className='text-(--secondary-color)'>
               You reached Level {level}

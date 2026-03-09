@@ -7,14 +7,19 @@ import clsx from 'clsx';
 import { Timer, Zap, Trophy, RefreshCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+type KanaItem = {
+  kana: string;
+  romanji: string;
+};
+
 const GAME_DURATION = 30;
 
 export default function FlashRush() {
   const [gameState, setGameState] = useState<'idle' | 'playing' | 'result'>(
     'idle',
   );
-  const [currentKana, setCurrentKana] = useState<any>(null);
-  const [options, setOptions] = useState<any[]>([]);
+  const [currentKana, setCurrentKana] = useState<KanaItem | null>(null);
+  const [options, setOptions] = useState<KanaItem[]>([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [lastResult, setLastResult] = useState<'correct' | 'wrong' | null>(
@@ -56,7 +61,7 @@ export default function FlashRush() {
     return () => clearInterval(timer);
   }, [gameState, timeLeft, score]);
 
-  const handleAnswer = (option: any) => {
+  const handleAnswer = (option: KanaItem) => {
     if (gameState !== 'playing') return;
 
     if (option.kana === currentKana.kana) {
